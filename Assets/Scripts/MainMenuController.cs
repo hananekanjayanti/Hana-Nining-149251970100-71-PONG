@@ -11,8 +11,8 @@ public class MainMenuController : MonoBehaviour
 
     }
 
-    public void openAuthor()
-    {
-        Debug.Log("Created By: Hana Nining - 149251970100-71");
-    }
+    // public void openAuthor()
+    // {
+    //     Debug.Log("Created By: Hana Nining - 149251970100-71");
+    // }
 }

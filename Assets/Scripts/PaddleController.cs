@@ -5,7 +5,7 @@ using UnityEngine;
 public class PaddleController : MonoBehaviour
 {
     // Start is called before the first frame update
-     public int speed;
+     public float speed;
      public KeyCode upKey;
      public KeyCode downKey;
      private Rigidbody2D rig;
@@ -24,9 +24,9 @@ public class PaddleController : MonoBehaviour
         MoveObject(GetInput());
         
     }
-        private Vector2 GetInput()
-        {
-            Vector2 movement = Vector2.zero;
+    private Vector2 GetInput()
+    {
+            // Vector2 movement = Vector2.zero;
 
         if (Input.GetKey(upKey))
         {
@@ -39,13 +39,50 @@ public class PaddleController : MonoBehaviour
             return Vector2.down * speed;
         }
         return Vector2.zero;
-        }
+    }
 
         private void MoveObject(Vector2 movement)
         {
             Debug.Log("Kecepatan: "+ movement);
-           rig.velocity = movement;
+            rig.velocity = movement;
 
         }
+
+        public void ActivatePSpeed(float magnitude, float duration)
+        {
+            speed *= magnitude;
+            StartCoroutine(SpeedTimer (magnitude, duration));
+        }
+
+        public void DeactivatePSpeed(float magnitude)
+        {
+            speed /= magnitude;
+            
+        }
+
+        public void ActivatePScale(float multiplier, float duration)
+        {
+            transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y*multiplier, transform.localScale.z);
+            StartCoroutine(ScaleTimer (multiplier, duration));
+        }
+
+        public void DeactivatePScale(float multiplier)
+        {
+          transform.localScale = new Vector3(transform.localScale.x, transform.localScale.y/multiplier, transform.localScale.z);
+        }
+
+        IEnumerator SpeedTimer(float magnitude, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            DeactivatePSpeed(magnitude);
+        }
+
+        IEnumerator ScaleTimer(float multiplier, float duration)
+        {
+            yield return new WaitForSeconds(duration);
+            DeactivatePScale(multiplier);
+        }
+
+
 
 }
